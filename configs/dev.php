@@ -7,7 +7,12 @@
  */
 return new \Phalcon\Config([
     'logger' => [
-        'file' => ROOT_PATH . DIRECTORY_SEPARATOR . "Logs" . DIRECTORY_SEPARATOR."debug.log"
+        'file' => ROOT_PATH . DIRECTORY_SEPARATOR . "Logs" . DIRECTORY_SEPARATOR
+    ],
+    'queue' => [
+        'host' => 'beanstalkd',
+        'port' => '11300',
+        'chooseTube' => 'default',
     ],
     'database' => [
         'adapter' => 'Mysql',
@@ -22,5 +27,6 @@ return new \Phalcon\Config([
         'migrationsDir' => APP_PATH . '/migrations/',
         'viewsDir' => APP_PATH . '/views/',
         'baseUri' => 'http://inini.cn/',
-    ]
+    ],
+    'allowOriginOptions' => ['rongbaojie.cn', 'freeradio.cn']
 ]);

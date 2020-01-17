@@ -4,6 +4,7 @@
 use Application\Core\Components\Logger\Manger as loggerManger;
 use Phalcon\Mvc\View\Simple as View;
 use Phalcon\Mvc\Url as UrlResolver;
+use Phalcon\Queue\Beanstalk;
 
 /**
  * Shared configuration service
@@ -24,6 +25,38 @@ $di->setShared('logger', function () use ($config) {
 $di->setShared('apiResponse', function () {
     return new  Application\Core\Components\Internet\Http\Response();
 });
+
+$di->setShared('queue', function () use ($config) {
+    $options = [
+        'host' => $config->queue->host,
+        'port' => $config->queue->port,
+        'persistent' => true,
+    ];
+    $queue = new Beanstalk($options);
+    $queue->choose($config->queue->chooseTube);
+
+    /**
+     *
+     *
+     *<code>
+     * $queue->put(
+     *       [
+     *           'processVideo' => 4871
+     *        ],
+     *        [
+     *           'priority' => 250,//优先级 ，他是一个2^32的整数，较小的值将优先于较大的值之前工作，最紧急情况为0，最后执行4294967295
+     *           'delay'    => 10,//延迟操作
+     *           'ttr'      => 3600 // 允许工作允许的秒数
+     *         ]
+     *    );
+     * </code>
+     *
+     *
+     */
+
+    return $queue;
+});
+
 /**
  * Sets the view component
  */

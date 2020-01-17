@@ -1,7 +1,7 @@
 <?php
 
 
-$getAllowOrigin = function () use ($app,$config) {
+$getAllowOrigin = function () use ($app, $config) {
     $request = (new  Phalcon\Http\Request())->getHeaders();
     if (isset($request['Origin']) and $config->allowOriginOptions) {
         $domain = explode('.', $request['Origin']);
@@ -17,13 +17,29 @@ $getAllowOrigin = function () use ($app,$config) {
     return "*";
 };
 
-$setHeader = function () use ($app,$getAllowOrigin) {
+$setHeader = function () use ($app, $getAllowOrigin) {
     $app->response->setHeader("Access-Control-Allow-Origin", $getAllowOrigin());
     $app->response->setHeader("Access-Control-Allow-Credentials", 'true');
     $app->response->setHeader("Content-type", "text/html; charset=utf-8");
     $app->response->setHeader("Access-Control-Allow-Methods", 'GET, POST, OPTIONS, PUT, DELETE');
     $app->response->setHeader("Access-Control-Allow-Headers", 'Access-Token,Content-Type,Access-Control-Request-Method');
 };
+
+/**
+ * 路由REST请求
+ */
+$restful = function () use ($app) {
+    $request = $app->getService("request");
+    $uri = parse_url($request->getURI());
+    $pathInfo = explode("/", $uri["path"]);
+    if (isset($pathInfo[1]) && !empty($pathInfo[1])) {
+        $filename = sprintf('%s' . 'controllers/%sController.php', APP_PATH . DIRECTORY_SEPARATOR, ucfirst($pathInfo[1]));
+        if (file_exists($filename)) {
+            include_once $filename;
+        }
+    }
+};
+$restful();
 
 /**
  * 根
@@ -35,13 +51,13 @@ $app->get('/', function () use ($app) {
 /**
  * 未找到
  */
-$app->notFound(function () use ($app,$setHeader) {
+$app->notFound(function () use ($app, $setHeader) {
     $setHeader();
     if ($app->request->isOptions()) {
         $app->response->setStatusCode('200', "OK");
     } else {
         $app->response->setStatusCode(Application\Core\Components\Internet\Http\Response::HTTP_NOT_FOUND_CODE, "Not Found");
-        $app->response->setJsonContent($app->apiResponse->error("Api Not Found ",404));
+        $app->response->setJsonContent($app->apiResponse->error("Api Not Found ", 404));
     }
     $app->response->send();
 });

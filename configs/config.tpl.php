@@ -9,6 +9,11 @@ return new \Phalcon\Config([
     'logger' => [
         'file' => ROOT_PATH . DIRECTORY_SEPARATOR . "Logs" . DIRECTORY_SEPARATOR
     ],
+    'queue' => [
+        'host' => 'beanstalkd',
+        'port' => '11300',
+        'chooseTube' => 'default',
+    ],
     'database' => [
         'adapter' => 'Mysql',
         'host' => 'localhost',
