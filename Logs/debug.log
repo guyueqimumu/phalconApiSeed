@@ -1,0 +1,8 @@
+[2020-01-17 14:15:30][DEBUG]GET /asdasd HEADER {"Accept":"*\/*","Host":"test2.cn","User-Agent":"curl\/7.29.0","Content-Length":"","Content-Type":""}
+[2020-01-17 14:15:30][DEBUG]GET /asdasd RESPONSE error {"data":"","message":"Api Not Found ","status":"error","code":"404"}
+[2020-01-17 14:15:33][DEBUG]GET / HEADER {"Accept":"*\/*","Host":"test2.cn","User-Agent":"curl\/7.29.0","Content-Length":"","Content-Type":""}
+[2020-01-17 14:15:33][DEBUG]GET / RESPONSE success {"data":{"version":"1.0.0","timestamp":1579241733},"message":"","status":"success","code":"200"}
+[2020-01-17 14:16:00][DEBUG]GET / HEADER {"Accept":"*\/*","Host":"test2.cn","User-Agent":"curl\/7.29.0","Content-Length":"","Content-Type":""}
+[2020-01-17 14:16:00][DEBUG]GET / RESPONSE success {"data":{"version":"1.0.0","timestamp":1579241760},"message":"","status":"success","code":"200"}
+[2020-01-17 14:16:48][DEBUG]GET / HEADER {"Accept":"*\/*","Host":"test2.cn","User-Agent":"curl\/7.29.0","Content-Length":"","Content-Type":""}
+[2020-01-17 14:16:48][DEBUG]GET / RESPONSE success {"data":{"version":"1.0.0","timestamp":1579241808},"message":"","status":"success","code":"200"}
